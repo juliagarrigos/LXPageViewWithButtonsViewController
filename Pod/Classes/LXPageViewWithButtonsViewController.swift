@@ -42,12 +42,10 @@ open class LXPageViewWithButtonsViewController: UIViewController, UIPageViewCont
     
     /// page index
     var targetIndex: Int?
-    open var currentIdx = 0 {
-        didSet {
-            currentIdxUpdated()
-        }
-    }
-    open func currentIdxUpdated() {
+    open var currentIdx = 0
+
+    
+    open func updateCurrentIdx() {
         buttonsScrollView.buttons.forEach { $0.isSelected = false }
         buttonsScrollView.buttons[currentIdx].isSelected = true
         
@@ -87,7 +85,7 @@ open class LXPageViewWithButtonsViewController: UIViewController, UIPageViewCont
         super.viewWillAppear(animated)
         if !viewAppearedOnce {
             setupButtons()
-            pageViewController.setViewControllers([viewControllers![0]], direction: .forward, animated: false, completion: nil)
+            pageViewController.setViewControllers([viewControllers![currentIdx]], direction: .forward, animated: false, completion: nil)
             viewAppearedOnce = true
         }
     }
@@ -210,6 +208,7 @@ open class LXPageViewWithButtonsViewController: UIViewController, UIPageViewCont
                 bself.pageViewController.setViewControllers([vcs[nextIdx]], direction: dir, animated: true) { (finished) in
                     if finished {
                         bself.currentIdx = nextIdx
+                        bself.updateCurrentIdx()
                     }
                 }
                 })
@@ -224,6 +223,7 @@ open class LXPageViewWithButtonsViewController: UIViewController, UIPageViewCont
         
         self.pageViewController.setViewControllers([viewControllers[idx]], direction: .forward , animated: false, completion: nil)
         currentIdx = idx
+        updateCurrentIdx()
         
         guard let pageViewScrollView = pageViewScrollView else { return }
         DispatchQueue.main.async { [weak self] in
@@ -245,6 +245,7 @@ open class LXPageViewWithButtonsViewController: UIViewController, UIPageViewCont
             guard let curVC = pageViewController.viewControllers?.last,
                 let newCurIdx = viewControllers?.index(of: curVC) else { return }
             self.currentIdx = newCurIdx
+            updateCurrentIdx()
         }
     }
     
