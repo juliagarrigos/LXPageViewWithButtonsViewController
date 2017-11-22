@@ -121,14 +121,15 @@ open class LXPageViewWithButtonsViewController: UIViewController, UIPageViewCont
             ])
         
         /// layout page view controllers' view
-        let pageViewControllerView = pageViewController.view
-        pageViewControllerView?.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: pageViewControllerView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: pageViewControllerView, attribute: .top, relatedBy: .equal, toItem: buttonsScrollView, attribute: .bottom, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: pageViewControllerView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: pageViewControllerView, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1, constant: 0)
+        if let pageViewControllerView = pageViewController.view {
+            pageViewControllerView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: pageViewControllerView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0),
+                NSLayoutConstraint(item: pageViewControllerView, attribute: .top, relatedBy: .equal, toItem: buttonsScrollView, attribute: .bottom, multiplier: 1, constant: 0),
+                NSLayoutConstraint(item: pageViewControllerView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0),
+                NSLayoutConstraint(item: pageViewControllerView, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1, constant: 0)
             ])
+        }
     }
     
     // MARK: - Setups
@@ -185,7 +186,7 @@ open class LXPageViewWithButtonsViewController: UIViewController, UIPageViewCont
     }
     
     // MARK: - Buttons
-    open func selectionButtonTapped(_ btn: UIButton) {
+    @objc open func selectionButtonTapped(_ btn: UIButton) {
         let idx = btn.tag
         /// set the target index for scrolling buttons view purpose
         targetIndex = idx

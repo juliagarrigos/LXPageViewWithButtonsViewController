@@ -44,13 +44,13 @@ open class LXButtonsScrollView: UIScrollView {
         buttons = titles.map { (title) -> UIButton in
             let attrTitle = NSAttributedString.init(string: title,
                 attributes: [
-                    NSFontAttributeName: appearance.button.font.normal,
-                    NSForegroundColorAttributeName: appearance.button.foregroundColor.normal
+                    NSAttributedStringKey.font: appearance.button.font.normal,
+                    NSAttributedStringKey.foregroundColor: appearance.button.foregroundColor.normal
                 ])
             let attrTitleSelected = NSAttributedString.init(string: title,
                 attributes: [
-                    NSFontAttributeName: appearance.button.font.selected,
-                    NSForegroundColorAttributeName: appearance.button.foregroundColor.selected
+                    NSAttributedStringKey.font: appearance.button.font.selected,
+                    NSAttributedStringKey.foregroundColor: appearance.button.foregroundColor.selected
                 ])
             let btn = UIButton()
             btn.titleLabel?.textAlignment = .center
